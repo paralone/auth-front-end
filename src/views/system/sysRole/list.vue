@@ -1,5 +1,22 @@
 <template>
   <div class="app-container">
+    <!--查询表单-->
+    <div class="search-div">
+      <el-form label-width="70px" size="small">
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="角色名称">
+              <el-input v-model="searchObj.roleName" style="width: 100%" placeholder="角色名称" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row style="display:flex">
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="fetchData()">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetData">重置</el-button>
+        </el-row>
+      </el-form>
+    </div>
+
     <!-- 表格 -->
     <el-table
       v-loading="listLoading"
@@ -66,7 +83,7 @@ export default {
 
   methods: {
     fetchData(pageNum = 1) {
-      this.page = pageNum;
+      this.page = pageNum
       api
         .getPageList(this.page, this.limit, this.searchObj)
         .then((response) => {
@@ -77,8 +94,14 @@ export default {
     }
   },
 
+  resetData() {
+    this.searchObj = {}
+    this.fetchData()
+  },
+
   created() {
     this.fetchData()
   }
 }
+
 </script>
