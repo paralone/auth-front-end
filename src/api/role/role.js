@@ -9,6 +9,13 @@ export default {
       method: 'get',
       params: searchObj
     })
+  },
+
+  removeId(id) {
+    return request({
+      url: `${api_name}/remove/${id}`,
+      method: 'delete'
+    })
   }
 }
 

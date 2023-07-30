@@ -91,12 +91,12 @@ export default {
           this.list = response.data.records
           this.total = response.data.total
         })
-    }
-  },
+    },
 
-  resetData() {
-    this.searchObj = {}
-    this.fetchData()
+    resetData() {
+      this.searchObj = {}
+      this.fetchData()
+    }
   },
 
   created() {
