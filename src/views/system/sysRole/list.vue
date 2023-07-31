@@ -17,6 +17,10 @@
       </el-form>
     </div>
 
+    <div class="tools-div">
+      <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>
+    </div>
+
     <!-- 表格 -->
     <el-table
       v-loading="listLoading"
@@ -63,6 +67,21 @@
       layout="total, prev, pager, next, jumper"
       @current-change="fetchData"
     />
+
+    <el-dialog title="添加/修改" :visible.sync="dialogVisible" width="40%">
+      <el-form ref="dataForm" :model="sysRole" label-width="150px" size="small" style="padding-right: 40px;">
+        <el-form-item label="角色名称">
+          <el-input v-model="sysRole.roleName" />
+        </el-form-item>
+        <el-form-item label="角色编码">
+          <el-input v-model="sysRole.roleCode" />
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button icon="el-icon-refresh-right" size="small" @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" icon="el-icon-check" size="small" @click="saveOrUpdate()">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -77,7 +96,9 @@ export default {
       total: 0,
       page: 1,
       limit: 3,
-      searchObj: {}
+      searchObj: {},
+      sysRole: {},
+      dialogVisible: false
     }
   },
 
@@ -109,6 +130,31 @@ export default {
           this.fetchData()
         })
       })
+    },
+
+    add() {
+      this.dialogVisible = true
+      this.sysRole = {}
+    },
+
+    saveRole() {
+      api.save(this.sysRole).then(response => {
+        this.$message({ type: 'success', message: '添加成功' })
+        this.dialogVisible = false
+        this.fetchData()
+      })
+    },
+
+    updateRole() {
+
+    },
+
+    saveOrUpdate() {
+      if (!this.sysRole.id) {
+        this.saveRole()
+      } else {
+        this.updateRole()
+      }
     }
   },
 
