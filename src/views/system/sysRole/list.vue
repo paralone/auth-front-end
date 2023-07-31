@@ -137,6 +137,13 @@ export default {
       this.sysRole = {}
     },
 
+    edit(id) {
+      this.dialogVisible = true
+      api.getRoleId(id).then(response => {
+        this.sysRole = response.data
+      })
+    },
+
     saveRole() {
       api.save(this.sysRole).then(response => {
         this.$message({ type: 'success', message: '添加成功' })
@@ -146,7 +153,11 @@ export default {
     },
 
     updateRole() {
-
+      api.update(this.sysRole).then(response => {
+        this.$message({ type: 'success', message: '修改成功' })
+        this.dialogVisible = false
+        this.fetchData()
+      })
     },
 
     saveOrUpdate() {

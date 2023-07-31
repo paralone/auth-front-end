@@ -24,6 +24,21 @@ export default {
       method: 'post',
       data: role
     })
+  },
+
+  getRoleId(id) {
+    return request({
+      url: `${api_name}/findRoleById/${id}`,
+      method: 'post'
+    })
+  },
+
+  update(role) {
+    return request({
+      url: `${api_name}/update`,
+      method: 'post',
+      data: role
+    })
   }
 }
 
