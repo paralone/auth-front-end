@@ -39,6 +39,14 @@ export default {
       method: 'post',
       data: role
     })
+  },
+
+  batchRemove(idList) {
+    return request({
+      url: `${api_name}/batchRemove`,
+      method: `delete`,
+      data: idList
+    })
   }
 }
 

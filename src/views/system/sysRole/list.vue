@@ -19,6 +19,7 @@
 
     <div class="tools-div">
       <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>
+      <el-button class="btn-add" size="mini" @click="batchRemove()">批量删除</el-button>
     </div>
 
     <!-- 表格 -->
@@ -29,6 +30,7 @@
       border
       style="width: 100%; margin-top: 10px"
     >
+      <el-table-column type="selection" />
       <el-table-column label="序号" width="70" align="center">
         <template slot-scope="scope">
           {{ (page - 1) * limit + scope.$index + 1 }}
@@ -98,7 +100,8 @@ export default {
       limit: 3,
       searchObj: {},
       sysRole: {},
-      dialogVisible: false
+      dialogVisible: false,
+      multipleSelection: []
     }
   },
 
@@ -166,6 +169,41 @@ export default {
       } else {
         this.updateRole()
       }
+    },
+
+    // 当多选选项发生变化的时候调用
+    handleSelectionChange(selection) {
+      console.log(selection)
+      this.multipleSelection = selection
+    },
+
+    // 批量删除
+    batchRemove() {
+      if (this.multipleSelection.length === 0) {
+        this.$message.warning('请选择要删除的记录！')
+        return
+      }
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 点击确定，远程调用ajax
+        // 遍历selection，将id取出放入id列表
+        const idList = []
+        this.multipleSelection.forEach(item => {
+          idList.push(item.id)
+        })
+        // 调用api
+        return api.batchRemove(idList)
+      }).then((response) => {
+        this.fetchData()
+        this.$message.success(response.message)
+      }).catch(error => {
+        if (error === 'cancel') {
+          this.$message.info('取消删除')
+        }
+      })
     }
   },
 
