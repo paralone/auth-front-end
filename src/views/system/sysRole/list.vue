@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import api from '@/api/role/role'
+import api from '@/api/system/role'
 
 export default {
   data() {
@@ -213,3 +213,4 @@ export default {
 }
 
 </script>
+@/api/system/role
