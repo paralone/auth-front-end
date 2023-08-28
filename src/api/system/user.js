@@ -12,7 +12,7 @@ export default {
   },
   getById(id) {
     return request({
-      url: `${api_name}/get/${id}`,
+      url: `${api_name}/getUser/${id}`,
       method: 'get'
     })
   },
