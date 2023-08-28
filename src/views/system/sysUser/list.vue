@@ -151,7 +151,6 @@ export default {
   methods: {
     // 加载banner列表数据
     fetchData(page = 1) {
-      debugger
       this.page = page
       if (this.createTimes && this.createTimes.length == 2) {
         this.searchObj.createTimeBegin = this.createTimes[0]
